@@ -16,6 +16,9 @@ public class main {
 
     /*1.preflop*/
     public static void preflop(player player1,player player2){
+            player1.pay = 50;
+            player2.pay = 100;
+
 
     }
 

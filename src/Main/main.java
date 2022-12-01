@@ -1,6 +1,9 @@
 package Main;
 import Player.player;
+import Card.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -10,10 +13,32 @@ public class main {
     static int rounds = 1;
 
     /*发牌*/
-    public static void giveCard(int stages){
+    public static void Fapai(player p1,player p2,Heguan h1){
+        ArrayList<card> list=new ArrayList<>();
+        int[] color ={1,2,3,4};
+        int[] number = {2,3,4,5,6,7,8,9,10,11,12,13,14};
+        //将52张牌存入牌盒
+        for (int j : color) {
+            for (int k : number) {
+                list.add(new card(k, j));
+            }
+        }
+        //打乱扑克
+        Collections.shuffle(list);
+        /*取头七张作为游戏用牌*/
 
+        for (int i = 0; i < 7; i++) {
+            if(i<=1) {                          //前两张给p1作handCard
+                p1.handCard[i] = list.get(i);
+            }
+            else if(i==2||i==3){                //后两张给p2作handCard
+                p2.handCard[i-2]=list.get(i);
+            }
+            else{                               //最后5张作FiledCard
+                h1.FiledCard[i-4]=list.get(i);
+            }
+        }
     }
-
     /*1.preflop*/
     public static void preflop(player player1,player player2){
             player1.pay = 50;
@@ -59,38 +84,38 @@ public class main {
         System.out.println("player2剩余筹码:"+player2.chip);
         stages = scanner.nextInt();
 
-        switch (stages){
-            case 1: {
-                System.out.println("第"+stages+"轮:preflop");
+            switch (stages) {
+                case 1 -> {
+                    System.out.println("第" + stages + "轮:preflop");
 
-                preflop(player1,player2);
-                break;
-            }
-            case 2: {
-                System.out.println("第"+stages+"轮:flop");
+                    preflop(player1, player2);
+                    break;
+                }
+                case 2 -> {
+                    System.out.println("第" + stages + "轮:flop");
 
-                flop(player1,player2);
-                break;
-            }
-            case 3: {
-                System.out.println("第"+stages+"轮:turn");
+                    flop(player1, player2);
+                    break;
+                }
+                case 3 -> {
+                    System.out.println("第" + stages + "轮:turn");
 
-                turn(player1,player2);
-                break;
-            }
-            case 4: {
-                System.out.println("第"+stages+"轮:river");
+                    turn(player1, player2);
+                    break;
+                }
+                case 4 -> {
+                    System.out.println("第" + stages + "轮:river");
 
-                river(player1,player2);
-                break;
-            }
-            case 5: {
-                System.out.println("第"+stages+"轮:比牌");
+                    river(player1, player2);
+                    break;
+                }
+                case 5 -> {
+                    System.out.println("第" + stages + "轮:比牌");
 
-                PK(player1,player2);
-                break;
+                    PK(player1, player2);
+                    break;
+                }
             }
-        }
 
         //stages++;
 

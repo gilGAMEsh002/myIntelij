@@ -14,6 +14,16 @@ public class Heguan {
         return FiledCard[i];
     }
 
+    public String nowFiledCard(int stages){
+        String nowFiledCard = "";
+        if(stages==2){
+            for (int i = 0; i < 3; i++) {
+                nowFiledCard+=FiledCard[i].toString();
+            }
+        }
+        return nowFiledCard;
+    }
+
     public void setFiledCard(card[] card) {
         this.FiledCard = card;
     }

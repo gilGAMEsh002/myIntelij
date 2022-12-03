@@ -2,13 +2,16 @@ package Main;
 import Player.player;
 import Card.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
 
 
 public class main {
+
 
     static int stages = 1;
     static int rounds = 1;
@@ -41,6 +44,7 @@ public class main {
             }
         }
     }
+
     //随机给两名玩家中的一人赋大盲,另一人赋小盲
     /*1.preflop*/
     public static void preflop(player player1,player player2){
@@ -72,9 +76,10 @@ public class main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
     player player1 = new player();//我,AI
     player player2 = new player();
+    Heguan heguan = new Heguan();
 
     player1.Blind =1;
     player2.Blind =2;
@@ -87,18 +92,21 @@ public class main {
         System.out.printf("筹码池: %d\n",chipPool);
         System.out.println("player1剩余筹码:"+player1.chip);
         System.out.println("player2剩余筹码:"+player2.chip);
+        fapai(player1,player2,heguan);
         stages = scanner.nextInt();
 
             switch (stages) {
                 case 1 -> {
                     System.out.println("第" + stages + "轮:preflop");
-
+                    System.out.println("场牌:             ");
+                    System.out.println("player1的手牌:"+ Arrays.toString(player1.handCard));
+                    System.out.println("player2的手牌:"+ Arrays.toString(player2.handCard));
                     preflop(player1, player2);
                     break;
                 }
                 case 2 -> {
                     System.out.println("第" + stages + "轮:flop");
-
+                    System.out.println("场牌:"+heguan.nowFiledCard(2));
                     flop(player1, player2);
                     break;
                 }
@@ -123,7 +131,6 @@ public class main {
             }
 
         //stages++;
-
         if(player1.chip==0||player2.chip==0||stages==5){
             break;
         }

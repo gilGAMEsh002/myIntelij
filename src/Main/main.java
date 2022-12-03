@@ -6,27 +6,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
-
 
 
 public class main {
 
-
     static int stages = 1;
     static int rounds = 1;
 
-    /**/
     /*发牌*/
     public static void Fapai(player p1,player p2,Heguan h1){
         ArrayList<card> list=new ArrayList<>();
         int[] color ={1,2,3,4};
         int[] number = {2,3,4,5,6,7,8,9,10,11,12,13,14};
+        int cardWeight[]={0,1,2,3,4,5,6,7,8,9,10,11,12};
         //将52张牌存入牌盒
         for (int j : color) {
             for (int k : number) {
-                list.add(new card(k, j));
+                list.add(new card(k, j,cardWeight[k]));
             }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
         //打乱扑克
         Collections.shuffle(list);
@@ -44,12 +46,9 @@ public class main {
             }
         }
     }
-
-    //随机给两名玩家中的一人赋大盲,另一人赋小盲
+    //随机赋大小盲
     /*1.preflop*/
     public static void preflop(player player1,player player2){
-
-
             player1.pay = 50;
             player2.pay = 100;
 
@@ -76,7 +75,7 @@ public class main {
 
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
     player player1 = new player();//我,AI
     player player2 = new player();
     Heguan heguan = new Heguan();
@@ -131,6 +130,7 @@ public class main {
             }
 
         //stages++;
+
         if(player1.chip==0||player2.chip==0||stages==5){
             break;
         }

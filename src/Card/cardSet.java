@@ -11,6 +11,19 @@ public class cardSet {
 
         return name;
     }
+
+    public int[] giveWeight(card[] HandCard,card[] FieldCard){
+        int[] cardWeight=new int[52];
+        int k = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 13; j++) {
+                cardWeight[k] = k;
+            }
+        }
+
+        return cardWeight;
+    }
+
     /*找数字相同的牌有多少*/
     /*
     * 0     高牌
@@ -19,7 +32,8 @@ public class cardSet {
     * 3+2   葫芦
     * 4     四条
     * */
-    public String same_card_calculate(card[] HandCard,card[] FiledCard,int stages){
+    public String same_card_calculate(card[] HandCard,card[] FieldCard,int stages){
+
 
 
         return "YiDui";

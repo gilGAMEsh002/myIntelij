@@ -7,11 +7,13 @@ import java.util.Collections;
 import java.util.Scanner;
 
 
+
 public class main {
 
     static int stages = 1;
     static int rounds = 1;
 
+    /**/
     /*发牌*/
     public static void Fapai(player p1,player p2,Heguan h1){
         ArrayList<card> list=new ArrayList<>();
@@ -39,8 +41,11 @@ public class main {
             }
         }
     }
+    //随机给两名玩家中的一人赋大盲,另一人赋小盲
     /*1.preflop*/
     public static void preflop(player player1,player player2){
+
+
             player1.pay = 50;
             player2.pay = 100;
 

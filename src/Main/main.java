@@ -4,6 +4,7 @@ import Card.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -17,11 +18,15 @@ public class main {
         ArrayList<card> list=new ArrayList<>();
         int[] color ={1,2,3,4};
         int[] number = {2,3,4,5,6,7,8,9,10,11,12,13,14};
+        int cardWeight[]={0,1,2,3,4,5,6,7,8,9,10,11,12};
         //将52张牌存入牌盒
         for (int j : color) {
             for (int k : number) {
-                list.add(new card(k, j));
+                list.add(new card(k, j,cardWeight[k]));
             }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
         //打乱扑克
         Collections.shuffle(list);
@@ -39,8 +44,11 @@ public class main {
             }
         }
     }
+    //随机赋大小盲
     /*1.preflop*/
     public static void preflop(player player1,player player2){
+        Random ra=new Random();
+        player1.Blind=ra.nextInt();
             player1.pay = 50;
             player2.pay = 100;
 
@@ -73,6 +81,7 @@ public class main {
 
     player1.Blind =1;
     player2.Blind =2;
+
 
     int chipPool = 0;
     Scanner scanner = new Scanner(System.in);

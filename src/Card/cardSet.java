@@ -20,8 +20,19 @@ public class cardSet {
     * 4     四条
     * */
     public String same_card_calculate(card[] HandCard,card[] FiledCard,int stages){
+        int num= HandCard.length+FiledCard.length;
+        card temp[]=new card[num];
+        //将手牌和公选牌复制到temp中
+        for (int i = 0; i < HandCard.length; i++) {
+            temp[i]=HandCard[i];
+        }
+        for (int i = 0; i < FiledCard.length; i++) {
+            temp[i+HandCard.length]=FiledCard[i];
+        }
+        //bia
+        for (int i = 0; i < temp.length; i++) {
 
-
+        }
         return "YiDui";
     }
 

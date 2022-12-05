@@ -1,5 +1,8 @@
 package Player;
 import Card.card;
+
+import java.sql.SQLOutput;
+
 public class player {
     public int Blind;   //1,2分别为小盲与大盲
     public card[] handCard = new card[2];   //两张手牌
@@ -16,38 +19,30 @@ public class player {
         this.handCard = handCard;
     }
 
-   //check不进行任何操作，将操作权由player1移动到player2
-    public boolean Check(player player1, player player2,int stages){
-        if(stages>1&&stages<=3){
-            if(!player2.flag)
-                return false;
-            else {
-                player1.flag = false;
-                player2.flag = true;
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Check,Call等方法的参数全部变为另一个player与stages(stages可能也会删除)
+     */
+
+    public void Check(player player,int stages){
+        //过牌,什么也不做
     }
     //跟注，获取player1的pay
-    public boolean Call(player player1, player player2,int stages){
-        player1.pay=player2.pay;
-        player1.chip=player1.chip-player1.pay;
-        return true;
-
+    public void Call(player player, int stages){
+        this.pay = player.pay;              //下注,同上一个人的下注
+        this.chip = this.chip - this.pay;   //从玩家的筹码中扣掉下注
     }
     //加注
-    public boolean Raise(player player1,player player2,int stages){
-        if(stages>=1){
-            player1.pay*=player2.pay;
-            player1.chip=player1.chip-player1.pay;
-            return true;
-        }
-        return  false;
+    public void Raise(player player,int stages){
+
+        this.pay = 2*player.pay;
+        this.chip = this.chip - this.pay;
+
     }
     //弃牌
-    public boolean Fold(player player2,int stages){
-        player2.flag=false;
+    public boolean Fold(player player,int stages){
+
+
+        System.out.println("player"+this.Blind+"弃牌,本局游戏结束");
 
         return true;
     }

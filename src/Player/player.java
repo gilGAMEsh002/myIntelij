@@ -8,7 +8,7 @@ public class player {
     public card[] handCard = new card[2];   //两张手牌
     public int chip = 2000;
     public int pay; //最小下注额为100
-    boolean flag;//是否是该玩家进行操作
+    public boolean isFold = false;//用isFold来判断是否执行continue
 
     /*分析并选择*/
     public void play(){
@@ -41,9 +41,8 @@ public class player {
     //弃牌
     public boolean Fold(player player,int stages){
 
-
+        this.isFold = true;
         System.out.println("player"+this.Blind+"弃牌,本局游戏结束");
-
         return true;
     }
 }

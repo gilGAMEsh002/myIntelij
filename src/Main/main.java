@@ -14,7 +14,7 @@ public class main {
 
     static int stages = 1;
     static int rounds = 1;
-
+    static int chipPool = 0;
     /*发牌
     * 给分别给p1,p2,两张手牌
     * 给h1五张场牌
@@ -65,7 +65,9 @@ public class main {
             player1.chip = player1.chip - player1.pay;
             player2.pay = 100;
             player2.chip = player2.chip - player2.pay;
+            chipPool  = player1.pay+player2.pay;
 
+            //player1先开始
             //player1做选择Call,Raise,Fold
             Scanner scanner = new Scanner(System.in);
             System.out.println("请player1选择: 1.Call  2.Raise 3.Fold");
@@ -79,9 +81,12 @@ public class main {
                 }
                 case "3"->{
                     player1.Fold(player2,stages);
-
+                    rounds++;
                 }
             }
+            chipPool += player1.chip;
+            if(player1.isFold)return;//判断是否直接结束,player2不再操作
+
             System.out.println("请player2选择: 1.Call  2.Raise 3.Fold 4.Check");
             choice = scanner.nextLine();
             switch (choice){
@@ -93,11 +98,13 @@ public class main {
             }
             case "3"->{
                 player2.Fold(player1,stages);
+                rounds++;
             }
             case "4"->{
                 player2.Check(player1,stages);
             }
             }
+            chipPool += player2.chip;
     }
 
     /*2.flop*/
@@ -128,11 +135,12 @@ public class main {
     player1.Blind =1;
     player2.Blind =2;
 
-    int chipPool = 0;
+
     Scanner scanner = new Scanner(System.in);
 
         while(true){
-            System.out.printf("----------------------------第%d局--------------------------",rounds);
+            System.out.printf("----------------------------第%d局--------------------------\n",rounds);
+            chipPool = 0;
         System.out.printf("筹码池: %d\n",chipPool);
         System.out.println("player1剩余筹码:"+player1.chip);
         System.out.println("player2剩余筹码:"+player2.chip);
@@ -147,6 +155,13 @@ public class main {
                     System.out.println("player2的手牌:"+ Arrays.toString(player2.handCard));
                     preflop(player1, player2);
 
+                    //依次判断是否有人Fold,是否需要直接结束本局游戏
+                    if(player1.isFold){
+                        continue;
+                    }
+                    if(player2.isFold){
+                        continue;
+                    }
                 }
                 case 2 -> {
                     System.out.println("第" + stages + "轮:flop");

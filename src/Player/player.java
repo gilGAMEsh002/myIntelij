@@ -35,8 +35,6 @@ public class player {
     public void Raise(player player,int stages){
 
         this.pay = 2*player.pay;
-        this.chip = this.chip - this.pay;
-
     }
     //弃牌
     public boolean Fold(player player,int stages){

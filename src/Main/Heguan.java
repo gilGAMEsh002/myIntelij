@@ -16,11 +16,19 @@ public class Heguan {
 
     public String nowFiledCard(int stages){
         String nowFiledCard = "";
-        if(stages==2){
+        if(stages>=2){
             for (int i = 0; i < 3; i++) {
                 nowFiledCard+=FiledCard[i].toString();
             }
+            if (stages>=3) {
+                nowFiledCard += FiledCard[3].toString();
+                if(stages==4||stages==5){
+                    nowFiledCard+=FiledCard[4].toString();
+                }
+            }
+
         }
+
         return nowFiledCard;
     }
 

@@ -20,7 +20,7 @@ public class card {
             case 2->value+="♦";
             case 3->value+="♠";
             case 4->value+="♣";
-
+            default -> value+="";
         }
         switch (number){
             case 11->value+="J";
@@ -29,7 +29,7 @@ public class card {
             case 14->value+="A";
             default -> value+=number;
         }
-        return "card"+value;
+        return " "+value+" ";
 
     }
 

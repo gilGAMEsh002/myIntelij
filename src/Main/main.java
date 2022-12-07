@@ -39,7 +39,7 @@ public class main {
         card t1[]=new card[2];
         card t2[]=new card[2];
         card t3[]=new card[5];
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 9; i++) {
             if(i<=1) {
                 t1[i] = list.get(i);
             }
@@ -60,12 +60,6 @@ public class main {
     /*1.preflop*/
     public static void preflop(player player1,player player2){
 
-            //下盲注
-            player1.pay = 50;
-            player1.chip = player1.chip - player1.pay;
-            player2.pay = 100;
-            player2.chip = player2.chip - player2.pay;
-            chipPool  = player1.pay+player2.pay;
 
             //player1先开始
             //player1做选择Call,Raise,Fold
@@ -75,16 +69,21 @@ public class main {
             switch (choice){
                 case "1"->{
                     player1.Call(player2,stages);
+                    chipPool += player1.pay;
                 }
                 case "2"->{
                     player1.Raise(player2,stages);
+                    chipPool += player1.pay;
                 }
                 case "3"->{
                     player1.Fold(player2,stages);
+                    player2.chip += chipPool;//player1认输,把筹码池的筹码都给player2
                     rounds++;
                 }
             }
-            chipPool += player1.chip;
+            //System.out.println("现在player1的筹码数:"+player1.chip);
+            //System.out.println("现在筹码池的筹码数:"+chipPool);
+
             if(player1.isFold)return;//判断是否直接结束,player2不再操作
 
             System.out.println("请player2选择: 1.Call  2.Raise 3.Fold 4.Check");
@@ -92,41 +91,88 @@ public class main {
             switch (choice){
             case "1"->{
                 player2.Call(player1,stages);
+                chipPool += player2.pay;
             }
             case "2"->{
                 player2.Raise(player1,stages);
+                chipPool += player2.pay;
             }
             case "3"->{
                 player2.Fold(player1,stages);
+                player1.chip += chipPool;//player2认输,把筹码池的筹码都给player21
                 rounds++;
             }
             case "4"->{
                 player2.Check(player1,stages);
             }
             }
-            chipPool += player2.chip;
+            stages++;
     }
 
     /*2.flop*/
     public  static void flop(player player1,player player2){
+        //player2先开始
+        //player2做选择Call,Raise,Fold
 
+        System.out.println("请player2选择: 1.Call  2.Raise 3.Fold");
+        String choice = scanner.nextLine();
+        switch (choice){
+            case "1"->{
+                player2.Call(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "2"->{
+                player2.Raise(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "3"->{
+                player2.Fold(player1,stages);
+                player1.chip += chipPool;//player2认输,把筹码池的筹码都给player1
+                rounds++;
+            }
+        }
+        if(player2.isFold)return;//判断是否直接结束,player1不再操作
+
+        System.out.println("请player1选择: 1.Call  2.Raise 3.Fold 4.Check");
+        choice = scanner.nextLine();
+        switch (choice){
+            case "1"->{
+                player1.Call(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "2"->{
+                player1.Raise(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "3"->{
+                player1.Fold(player2,stages);
+                player2.chip += chipPool;//player2认输,把筹码池的筹码都给player21
+                rounds++;
+            }
+            case "4"->{
+                player1.Check(player2,stages);
+            }
+        }
+        stages++;
     }
 
     /*3.turn*/
     public  static void turn(player player1,player player2){
-
+            flop(player1,player2);
     }
 
     /*4.river*/
     public  static void river(player player1,player player2){
-
+            flop(player1,player2);
     }
 
     /*5.PK*/
     public  static void PK(player player1,player player2){
 
+            stages++;
     }
 
+    public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
     player player1 = new player();//我,AI
     player player2 = new player();
@@ -136,20 +182,28 @@ public class main {
     player2.Blind =2;
 
 
-    Scanner scanner = new Scanner(System.in);
+
 
         while(true){
             System.out.printf("----------------------------第%d局--------------------------\n",rounds);
             chipPool = 0;
-        System.out.printf("筹码池: %d\n",chipPool);
+            stages =1;
+            //下盲注
+            player1.pay = 50;
+            player1.chip = player1.chip - player1.pay;
+            player2.pay = 100;
+            player2.chip = player2.chip - player2.pay;
+            chipPool  = player1.pay+player2.pay;
+
+            System.out.printf("筹码池: %d\n",chipPool);
         System.out.println("player1剩余筹码:"+player1.chip);
         System.out.println("player2剩余筹码:"+player2.chip);
         fapai(player1,player2,heguan);
-        stages = scanner.nextInt();//手动输入stages
+        //stages = scanner.nextInt();//手动输入stages
 
-            switch (stages) {
-                case 1 -> {
-                    System.out.println("第" + stages + "轮:preflop");
+//            switch (stages) {
+//                case 1 -> {
+                    System.out.println("*****第" + stages + "轮:preflop*****");
                     System.out.println("场牌:             ");
                     System.out.println("player1的手牌:"+ Arrays.toString(player1.handCard));
                     System.out.println("player2的手牌:"+ Arrays.toString(player2.handCard));
@@ -162,36 +216,81 @@ public class main {
                     if(player2.isFold){
                         continue;
                     }
-                }
-                case 2 -> {
+
+                    //显示对局情况
+                    System.out.println("*****player1下注:"+player1.pay);
+                    System.out.println("*****player2下注:"+player2.pay);
+                    System.out.println("*****当前筹码池:"+chipPool);
+//                }
+//                case 2 -> {
                     System.out.println("第" + stages + "轮:flop");
-                    System.out.println("场牌:"+heguan.nowFiledCard(2));
+                    System.out.println("场牌:"+heguan.nowFiledCard(stages));
                     flop(player1, player2);
 
-                }
-                case 3 -> {
-                    System.out.println("第" + stages + "轮:turn");
+                    //依次判断是否有人Fold,是否需要直接结束本局游戏
+                    if(player2.isFold){
+                        continue;
+                    }
+                    if(player1.isFold){
+                        continue;
+                    }
 
+                    //显示对局情况
+                    System.out.println("*****player1下注:"+player1.pay);
+                    System.out.println("*****player2下注:"+player2.pay);
+                    System.out.println("*****当前筹码池:"+chipPool);
+
+
+ //               }
+ //               case 3 -> {
+                    System.out.println("第" + stages + "轮:turn");
+                    System.out.println("场牌:"+heguan.nowFiledCard(stages));
                     turn(player1, player2);
 
-                }
-                case 4 -> {
+                    //依次判断是否有人Fold,是否需要直接结束本局游戏
+                    if(player2.isFold){
+                        continue;
+                    }
+                    if(player1.isFold){
+                        continue;
+                    }
+
+                    //显示对局情况
+                    System.out.println("*****player1下注:"+player1.pay);
+                    System.out.println("*****player2下注:"+player2.pay);
+                    System.out.println("*****当前筹码池:"+chipPool);
+//                }
+//                case 4 -> {
                     System.out.println("第" + stages + "轮:river");
+                    System.out.println("场牌:"+heguan.nowFiledCard(stages));
 
-                    river(player1, player2);
 
-                }
-                case 5 -> {
+                    //依次判断是否有人Fold,是否需要直接结束本局游戏
+                    if(player2.isFold){
+                        continue;
+                    }
+                    if(player1.isFold){
+                        continue;
+                    }
+
+                    //显示对局情况
+                    System.out.println("*****player1下注:"+player1.pay);
+                    System.out.println("*****player2下注:"+player2.pay);
+                    System.out.println("*****当前筹码池:"+chipPool);
+
+//                }
+//                case 5 -> {
                     System.out.println("第" + stages + "轮:比牌");
 
                     PK(player1, player2);
+//
+//                }
+ //           }
 
-                }
-            }
 
-        //stages++;
-
-        if(player1.chip==0||player2.chip==0||stages==5){
+        rounds++;//本局游戏结束
+        if(player1.chip==0||player2.chip==0){
+            System.out.println("游戏结束,胜利者是:player"+(player1.chip>player2.chip?1:2));
             break;
         }
 

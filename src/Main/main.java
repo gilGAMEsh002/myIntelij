@@ -58,14 +58,16 @@ public class main {
 
     //随机给两名玩家中的一人赋大盲,另一人赋小盲
     /*1.preflop*/
-    public static void preflop(player player1,player player2){
+    public static void preflop(playerAI player1,playerAI player2){
 
 
             //player1先开始
             //player1做选择Call,Raise,Fold
             Scanner scanner = new Scanner(System.in);
             System.out.println("请player1选择: 1.Call  2.Raise 3.Fold");
-            String choice = scanner.nextLine();
+            //String choice = scanner.nextLine();人类操作就保留,AI操作就注释掉,用下面两行代码
+            String choice = "";
+            choice = player1.getPreflop_choice(player2);
             switch (choice){
                 case "1"->{
                     player1.Call(player2,stages);
@@ -110,7 +112,7 @@ public class main {
     }
 
     /*2.flop*/
-    public  static void flop(player player1,player player2){
+    public  static void flop(playerAI player1,playerAI player2){
         //player2先开始
         //player2做选择Call,Raise,Fold
 
@@ -134,7 +136,7 @@ public class main {
         if(player2.isFold)return;//判断是否直接结束,player1不再操作
 
         System.out.println("请player1选择: 1.Call  2.Raise 3.Fold 4.Check");
-        choice = scanner.nextLine();
+        choice = player1.getFlop_choice(player2);
         switch (choice){
             case "1"->{
                 player1.Call(player2,stages);
@@ -157,25 +159,113 @@ public class main {
     }
 
     /*3.turn*/
-    public  static void turn(player player1,player player2){
-            flop(player1,player2);
+    public  static void turn(playerAI player1,playerAI player2){
+        //player2先开始
+        //player2做选择Call,Raise,Fold
+
+        System.out.println("请player2选择: 1.Call  2.Raise 3.Fold");
+        String choice = scanner.nextLine();
+        switch (choice){
+            case "1"->{
+                player2.Call(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "2"->{
+                player2.Raise(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "3"->{
+                player2.Fold(player1,stages);
+                player1.chip += chipPool;//player2认输,把筹码池的筹码都给player1
+                rounds++;
+            }
+        }
+        if(player2.isFold)return;//判断是否直接结束,player1不再操作
+
+        System.out.println("请player1选择: 1.Call  2.Raise 3.Fold 4.Check");
+        choice = player1.getFlop_choice(player2);
+        switch (choice){
+            case "1"->{
+                player1.Call(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "2"->{
+                player1.Raise(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "3"->{
+                player1.Fold(player2,stages);
+                player2.chip += chipPool;//player2认输,把筹码池的筹码都给player21
+                rounds++;
+            }
+            case "4"->{
+                player1.Check(player2,stages);
+            }
+        }
+        stages++;
     }
 
     /*4.river*/
-    public  static void river(player player1,player player2){
-            flop(player1,player2);
+    public  static void river(playerAI player1,playerAI player2){
+        //player2先开始
+        //player2做选择Call,Raise,Fold
+
+        System.out.println("请player2选择: 1.Call  2.Raise 3.Fold");
+        String choice = scanner.nextLine();
+        switch (choice){
+            case "1"->{
+                player2.Call(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "2"->{
+                player2.Raise(player1,stages);
+                chipPool += player2.pay;
+            }
+            case "3"->{
+                player2.Fold(player1,stages);
+                player1.chip += chipPool;//player2认输,把筹码池的筹码都给player1
+                rounds++;
+            }
+        }
+        if(player2.isFold)return;//判断是否直接结束,player1不再操作
+
+        System.out.println("请player1选择: 1.Call  2.Raise 3.Fold 4.Check");
+        choice = player1.getFlop_choice(player2);
+        switch (choice){
+            case "1"->{
+                player1.Call(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "2"->{
+                player1.Raise(player2,stages);
+                chipPool += player1.pay;
+            }
+            case "3"->{
+                player1.Fold(player2,stages);
+                player2.chip += chipPool;//player2认输,把筹码池的筹码都给player21
+                rounds++;
+            }
+            case "4"->{
+                player1.Check(player2,stages);
+            }
+        }
+        stages++;
     }
 
     /*5.PK*/
-    public  static void PK(player player1,player player2){
+    public  static void PK(playerAI player1,playerAI player2){
+
+        //判断最大牌型的算法放这
+        //比较player1和player2的最大牌型,谁的最大牌型更大,谁赢
+
 
             stages++;
     }
 
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-    player player1 = new player();//我,AI
-    player player2 = new player();
+    playerAI player1 = new playerAI();
+    playerAI player2 = new playerAI();
     Heguan heguan = new Heguan();
 
     player1.Blind =1;

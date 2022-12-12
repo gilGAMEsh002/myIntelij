@@ -34,5 +34,23 @@ public class card {
         return value+color+number;
     }
 
+    public String printCard(){
+        String value="";
+        switch (color){
+            case 1->value+="♥";
+            case 2->value+="♦";
+            case 3->value+="♠";
+            case 4->value+="♣";
+            default -> value+="";
+        }
+        switch (number){
+            case 11->value+="J";
+            case 12->value+="Q";
+            case 13->value+="K";
+            case 14->value+="A";
+            default -> value+=number;
+        }
+        return " "+value+" ";
+    }
 
 }

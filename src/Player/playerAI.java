@@ -12,16 +12,19 @@ public class playerAI extends player {
     public String getPreflop_choice(playerAI player2){
         card HandCard1 = this.handCard[0];
         card HandCard2 = this.handCard[1];
+        String choice = "";
 
         /*如果两张牌都小于10且不成对,就应该Fold了.至于都小于10但成对的情况就跟住*/
         if(HandCard1.number<10&&HandCard2.number<10&&HandCard2.number!=HandCard1.number){
             System.out.println("AI选择3.fold");
-            return "3";
+            choice = "3";
         }
+        else {
+            choice = "1";
+        }
+        System.out.println("AI选择"+choice);
 
-        System.out.println("AI选择");
-
-        return "1";
+        return choice;
     }
 
     public String getFlop_choice(playerAI player2){

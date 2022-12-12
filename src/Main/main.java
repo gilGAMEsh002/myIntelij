@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
+import static Card.cardSet.judge67Cards2;
+
 
 public class main {
 
@@ -89,7 +91,7 @@ public class main {
             if(player1.isFold)return;//判断是否直接结束,player2不再操作
 
             System.out.println("请player2选择: 1.Call  2.Raise 3.Fold 4.Check");
-            choice = scanner.nextLine();
+            choice = scanner.next();
             switch (choice){
             case "1"->{
                 player2.Call(player1,stages);
@@ -253,13 +255,28 @@ public class main {
     }
 
     /*5.PK*/
-    public  static void PK(playerAI player1,playerAI player2){
+    public  static void PK(playerAI player1,playerAI player2,Heguan heguan){
 
         //判断最大牌型的算法放这
         //比较player1和player2的最大牌型,谁的最大牌型更大,谁赢
+        int player1_weight = judge67Cards2(player1.handCard,heguan.FiledCard);
+        int player2_weight = judge67Cards2(player2.handCard,heguan.FiledCard);
+
+       if (player1_weight>player2_weight){
+           System.out.println("本局player1胜");
+           player1.chip+=chipPool;
+       }else if(player1_weight<player2_weight){
+            System.out.println("本局player2胜");
+            player2.chip+=chipPool;
+        }else {
+           System.out.println("平局");
+           player1.chip+=chipPool/2;
+           player2.chip+=chipPool/2;
+       }
 
 
-            stages++;
+
+        stages++;
     }
 
     public static Scanner scanner = new Scanner(System.in);
@@ -295,8 +312,8 @@ public class main {
 //                case 1 -> {
                     System.out.println("*****第" + stages + "轮:preflop*****");
                     System.out.println("场牌:             ");
-                    System.out.println("player1的手牌:"+ Arrays.toString(player1.handCard));
-                    System.out.println("player2的手牌:"+ Arrays.toString(player2.handCard));
+                    System.out.println("player1的手牌:"+ player1.handCard[0].printCard()+player1.handCard[1].printCard());
+                    System.out.println("player2的手牌:"+ player2.handCard[0].printCard()+player2.handCard[1].printCard());
                     preflop(player1, player2);
 
                     //依次判断是否有人Fold,是否需要直接结束本局游戏
@@ -372,18 +389,22 @@ public class main {
 //                case 5 -> {
                     System.out.println("第" + stages + "轮:比牌");
 
-                    PK(player1, player2);
+                    PK(player1, player2,heguan);
+
 //
 //                }
  //           }
 
 
         rounds++;//本局游戏结束
-        if(player1.chip==0||player2.chip==0){
+            System.out.println("本局游戏结束");
+        if(player1.chip<=0||player2.chip<=0){
             System.out.println("游戏结束,胜利者是:player"+(player1.chip>player2.chip?1:2));
-            break;
+            scanner.close();
+            System.exit(0);
         }
-
+        scanner.close();
+            //break;
     }
 
     }

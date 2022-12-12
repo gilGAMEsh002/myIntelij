@@ -65,7 +65,7 @@ public class main {
 
             //player1先开始
             //player1做选择Call,Raise,Fold
-            Scanner scanner = new Scanner(System.in);
+            //Scanner scanner = new Scanner(System.in);
             System.out.println("请player1选择: 1.Call  2.Raise 3.Fold");
             //String choice = scanner.nextLine();人类操作就保留,AI操作就注释掉,用下面两行代码
             String choice = "";
@@ -91,7 +91,7 @@ public class main {
             if(player1.isFold)return;//判断是否直接结束,player2不再操作
 
             System.out.println("请player2选择: 1.Call  2.Raise 3.Fold 4.Check");
-            choice = scanner.next();
+            choice = scanner.nextLine();
             switch (choice){
             case "1"->{
                 player2.Call(player1,stages);
@@ -288,10 +288,10 @@ public class main {
     player1.Blind =1;
     player2.Blind =2;
 
+    boolean start = true;
 
 
-
-        while(true){
+        while(start){
             System.out.printf("----------------------------第%d局--------------------------\n",rounds);
             chipPool = 0;
             stages =1;
@@ -318,11 +318,18 @@ public class main {
 
                     //依次判断是否有人Fold,是否需要直接结束本局游戏
                     if(player1.isFold){
+                        System.out.println("p1Fold");
+                        player1.isFold = false;
                         continue;
+
+                    }else{
+                        if(player2.isFold){
+                            System.out.println("p2Fold");
+                            player2.isFold = false;
+                            continue;
+                        }
                     }
-                    if(player2.isFold){
-                        continue;
-                    }
+
 
                     //显示对局情况
                     System.out.println("*****player1下注:"+player1.pay);
@@ -336,10 +343,16 @@ public class main {
 
                     //依次判断是否有人Fold,是否需要直接结束本局游戏
                     if(player2.isFold){
+                        System.out.println("p2Fold");
+                        player2.isFold = false;
                         continue;
-                    }
-                    if(player1.isFold){
-                        continue;
+                    }else{
+                        if(player1.isFold){
+                            System.out.println("p1Fold");
+                            player1.isFold = false;
+                            continue;
+                        }
+
                     }
 
                     //显示对局情况
@@ -356,11 +369,17 @@ public class main {
 
                     //依次判断是否有人Fold,是否需要直接结束本局游戏
                     if(player2.isFold){
+                        System.out.println("p2Fold");
+                        player2.isFold = false;
                         continue;
+                    }else {
+                        if(player1.isFold){
+                            System.out.println("p1Fold");
+                            player1.isFold = false;
+                            continue;
+                        }
                     }
-                    if(player1.isFold){
-                        continue;
-                    }
+
 
                     //显示对局情况
                     System.out.println("*****player1下注:"+player1.pay);
@@ -374,10 +393,16 @@ public class main {
 
                     //依次判断是否有人Fold,是否需要直接结束本局游戏
                     if(player2.isFold){
+                        System.out.println("p2Fold");
+                        player2.isFold = false;
                         continue;
-                    }
-                    if(player1.isFold){
-                        continue;
+                    }else{
+                        if(player1.isFold){
+                            System.out.println("p1Fold");
+                            player1.isFold = false;
+                            continue;
+                        }
+
                     }
 
                     //显示对局情况
@@ -388,8 +413,10 @@ public class main {
 //                }
 //                case 5 -> {
                     System.out.println("第" + stages + "轮:比牌");
-
-                    PK(player1, player2,heguan);
+            System.out.println("player1的手牌:"+ player1.handCard[0].printCard()+player1.handCard[1].printCard());
+            System.out.println("player2的手牌:"+ player2.handCard[0].printCard()+player2.handCard[1].printCard());
+            System.out.println("场牌:"+heguan.nowFiledCard(stages));
+            PK(player1, player2,heguan);
 
 //
 //                }
@@ -400,10 +427,9 @@ public class main {
             System.out.println("本局游戏结束");
         if(player1.chip<=0||player2.chip<=0){
             System.out.println("游戏结束,胜利者是:player"+(player1.chip>player2.chip?1:2));
-            scanner.close();
-            System.exit(0);
+            start = false;
         }
-        scanner.close();
+
             //break;
     }
 

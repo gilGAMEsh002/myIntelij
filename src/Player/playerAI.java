@@ -1,6 +1,8 @@
 package Player;
 
 import Card.*;
+import Main.Heguan;
+
 public class playerAI extends player {
 
     //1.call 2.raise 3.fold
@@ -9,7 +11,8 @@ public class playerAI extends player {
     String turn_choice="";
     String river_choice="";
 
-    public String getPreflop_choice(playerAI player2){
+
+    public String getPreflop_choice(playerAI player2,int stages){
         card HandCard1 = this.handCard[0];
         card HandCard2 = this.handCard[1];
         String choice = "";
@@ -20,14 +23,24 @@ public class playerAI extends player {
             choice = "3";
         }
         else {
-            choice = "1";
+            if(stages==1&&player2.pay<=800){
+                choice = "2";
+            }else if(stages==1&&player2.pay<=3200) {
+                choice = "1";
+            }else {
+                choice = "3";
+            }
+
         }
         System.out.println("AI选择"+choice);
 
         return choice;
     }
 
-    public String getFlop_choice(playerAI player2){
+    public String getFlop_choice(playerAI player2, Heguan heguan){
+        card HandCard1 = this.handCard[0];
+        card HandCard2 = this.handCard[1];
+        String choice = "";
 
 
 

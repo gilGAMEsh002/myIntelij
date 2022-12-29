@@ -75,22 +75,22 @@ public class main {
 
                 System.out.print("请player1选择:");
                 if (player1.pay!=player2.pay&&(player1.chip - (player2.pay - player1.pay) >= 0)) {
-                    System.out.print(" 1.Call ");
+                    System.out.print(" 2.Call ");
                 }
                 if (player1.chip - (2 * player2.pay - player1.pay) > 0) {
-                    System.out.print(" 2.Raise ");
+                    System.out.print(" 3.Raise ");
                 }
                 if (player1.pay == player2.pay) {
-                    System.out.print("3.Check");
+                    System.out.print("4.Check");
                 }
-                System.out.println("4.Fold");
+                System.out.println("5.Fold");
 
                 //String choice = scanner.nextLine();人类操作就保留,AI操作就注释掉,用下面两行代码
 
                 //choice = player1.getPreflop_choice(player2, stages);
                 choice = scanner.next();
                 switch (choice) {
-                    case "1" -> {
+                    case "2" -> {
                         if (player1.chip - (player2.pay - player1.pay) >= 0) {
                             player1.Call(player2, stages);
                             chipPool += player1.pay - player1.lastpay;
@@ -101,7 +101,7 @@ public class main {
 
                         }
                     }
-                    case "2" -> {
+                    case "3" -> {
                         if (player1.chip - (2 * player2.pay - player1.pay) > 0) {
                             player1.Raise(player2, stages);
                             chipPool += player1.pay - player1.lastpay;
@@ -111,7 +111,7 @@ public class main {
                             System.out.println("筹码不足,无法Raise,请按提示重新输入");
                         }
                     }
-                    case "3" -> {
+                    case "4" -> {
                         if (player1.pay == player2.pay) {
                             player1.Check(player2, stages);
                             break player1;//最后应该是在player2那里的check结束
@@ -119,7 +119,7 @@ public class main {
                             System.out.println("输入错误,请根据提示重新 输入");
                         }
                     }
-                    case "4" -> {
+                    case "5" -> {
                         player1.Fold(player2, stages);
                         player2.chip += chipPool;       //player1认输,把筹码池的筹码都给player2
                         rounds++;
@@ -140,19 +140,19 @@ public class main {
             while(true){
                 System.out.print("请player2选择:");
                 if(player1.pay!=player2.pay&&(player2.chip-(player1.pay-player2.pay)>=0)){
-                    System.out.print(" 1.Call ");
+                    System.out.print(" 2.Call ");
                 }
                 if (player2.chip - (2 * player1.pay - player2.pay) > 0) {
-                    System.out.print(" 2.Raise ");
+                    System.out.print(" 3.Raise ");
                 }
                 if (player1.pay == player2.pay) {
-                    System.out.print("3.Check");
+                    System.out.print("4.Check");
                 }
-                System.out.println("4.Fold");
+                System.out.println("5.Fold");
                 choice = scanner.next();
 
                 switch (choice) {
-                    case "1" -> {
+                    case "2" -> {
                         if (player1.pay!=player2.pay&&(player2.chip - (player1.pay - player2.pay) >= 0)) {
                             player2.Call(player1, stages);
                             chipPool += player2.pay - player2.lastpay;
@@ -161,7 +161,7 @@ public class main {
                             System.out.println("筹码不足,无法Call,请按提示重新输入");
                         }
                     }
-                    case "2" -> {
+                    case "3" -> {
                         if (player2.chip - (2 * player1.pay - player2.pay) > 0) {
                             player2.Raise(player1, stages);
                             chipPool += player2.pay - player2.lastpay;
@@ -171,7 +171,7 @@ public class main {
                         }
 
                     }
-                    case "3" -> {
+                    case "4" -> {
                         if (player1.pay == player2.pay) {
                             player2.Check(player1, stages);
                             break preflop;
@@ -179,7 +179,7 @@ public class main {
                             System.out.println("输入错误,请根据提示重新输入");
                         }
                     }
-                    case "4" -> {
+                    case "5" -> {
                         player2.Fold(player1, stages);
                         player1.chip += chipPool;       //player2认输,把筹码池的筹码都给player21
                         rounds++;
@@ -669,6 +669,10 @@ public class main {
         //比较player1和player2的最大牌型,谁的最大牌型更大,谁赢
         int player1_weight = judge67Cards2(player1.handCard, heguan.FiledCard);
         int player2_weight = judge67Cards2(player2.handCard, heguan.FiledCard);
+
+        System.out.println("player1_weight:"+player1_weight);
+
+        System.out.println("player2_weight:"+player2_weight);
 
         if (player1_weight > player2_weight) {
             System.out.println("本局player1胜");

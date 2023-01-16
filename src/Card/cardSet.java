@@ -123,6 +123,7 @@ public class cardSet {
         return weight;
     }
 
+    //判断6张或7张牌的
     public static int judge67Cards2(card[] ca1, card[] ca2) {
         card[] c1=new card[ca1.length+ca2.length];
         for (int i = 0; i < c1.length; i++) {
@@ -206,7 +207,7 @@ public class cardSet {
 
         //System.out.println("---------------------------------");
         for (int i = 0; i < c2.length; i++) {
-            maxWeight = judgeCards(c2[i])>maxWeight?judgeCards(c2[i]):maxWeight;
+            maxWeight = Math.max(judgeCards(c2[i]), maxWeight);
         }
         return maxWeight;
     }

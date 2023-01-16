@@ -6,7 +6,7 @@ import java.sql.SQLOutput;
 public class player {
     public int Blind;   //1,2分别为小盲与大盲
     public card[] handCard = new card[2];   //两张手牌
-    public int chip = 500;
+    public int chip = 20000;
     public int pay; //最小下注额为100
     public int lastpay;
     public boolean isFold = false;//用isFold来判断是否执行continue

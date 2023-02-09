@@ -705,79 +705,79 @@ public class main {
         player1.Blind = 1;
         player2.Blind = 2;
 
-        int rounds=0,p1_win=0,p2_win=0,tie=0;
-        int One=0,Two=0,Three=0,Four=0,Five=0,Six=0,Seven=0,Eight=0,Nine=0,Ten=0;
-        while (rounds<10000000){
-            fapai(player1,player2,heguan);
-
-            int player1_weight = judge67Cards2(player1.handCard, heguan.FiledCard);
-            int player2_weight = judge67Cards2(player2.handCard, heguan.FiledCard);
-
-            if(player1_weight==player2_weight){
-                tie++;
-                switch (player1_weight){
-                    case 1->One++;
-                    case 2->Two++;
-                    case 3->Three++;
-                    case 4->Four++;
-                    case 5->Five++;
-                    case 6->Six++;
-                    case 7->Seven++;
-                    case 8->Eight++;
-                    case 9->Nine++;
-                    case 10->Ten++;
-                }
-            } else if (player1_weight>player2_weight) {
-                p1_win++;
-                switch (player1_weight){
-                    case 1->One++;
-                    case 2->Two++;
-                    case 3->Three++;
-                    case 4->Four++;
-                    case 5->Five++;
-                    case 6->Six++;
-                    case 7->Seven++;
-                    case 8->Eight++;
-                    case 9->Nine++;
-                    case 10->Ten++;
-                }
-            }else {
-                p2_win++;
-                switch (player2_weight){
-                    case 1->One++;
-                    case 2->Two++;
-                    case 3->Three++;
-                    case 4->Four++;
-                    case 5->Five++;
-                    case 6->Six++;
-                    case 7->Seven++;
-                    case 8->Eight++;
-                    case 9->Nine++;
-                    case 10->Ten++;
-                }
-            }
-
-            rounds++;
-
-        }
-
-        System.out.println("p1_win:"+p1_win);
-        System.out.println("p2_win:"+p2_win);
-        System.out.println("tie:"+tie);
-        System.out.println("高牌:"+One);
-        System.out.println("一对:"+Two);
-        System.out.println("两对:"+Three);
-        System.out.println("三条:"+Four);
-        System.out.println("顺子:"+Five);
-        System.out.println("同花:"+Six);
-        System.out.println("葫芦:"+Seven);
-        System.out.println("四条:"+Eight);
-        System.out.println("同花顺:"+Nine);
-        System.out.println("皇家同花顺:"+Ten);
+//        int rounds=0,p1_win=0,p2_win=0,tie=0;
+//        int One=0,Two=0,Three=0,Four=0,Five=0,Six=0,Seven=0,Eight=0,Nine=0,Ten=0;
+//        while (rounds<10000000){
+//            fapai(player1,player2,heguan);
+//
+//            int player1_weight = judge67Cards2(player1.handCard, heguan.FiledCard);
+//            int player2_weight = judge67Cards2(player2.handCard, heguan.FiledCard);
+//
+//            if(player1_weight==player2_weight){
+//                tie++;
+//                switch (player1_weight){
+//                    case 1->One++;
+//                    case 2->Two++;
+//                    case 3->Three++;
+//                    case 4->Four++;
+//                    case 5->Five++;
+//                    case 6->Six++;
+//                    case 7->Seven++;
+//                    case 8->Eight++;
+//                    case 9->Nine++;
+//                    case 10->Ten++;
+//                }
+//            } else if (player1_weight>player2_weight) {
+//                p1_win++;
+//                switch (player1_weight){
+//                    case 1->One++;
+//                    case 2->Two++;
+//                    case 3->Three++;
+//                    case 4->Four++;
+//                    case 5->Five++;
+//                    case 6->Six++;
+//                    case 7->Seven++;
+//                    case 8->Eight++;
+//                    case 9->Nine++;
+//                    case 10->Ten++;
+//                }
+//            }else {
+//                p2_win++;
+//                switch (player2_weight){
+//                    case 1->One++;
+//                    case 2->Two++;
+//                    case 3->Three++;
+//                    case 4->Four++;
+//                    case 5->Five++;
+//                    case 6->Six++;
+//                    case 7->Seven++;
+//                    case 8->Eight++;
+//                    case 9->Nine++;
+//                    case 10->Ten++;
+//                }
+//            }
+//
+//            rounds++;
+//
+//        }
+//
+//        System.out.println("p1_win:"+p1_win);
+//        System.out.println("p2_win:"+p2_win);
+//        System.out.println("tie:"+tie);
+//        System.out.println("高牌:"+One);
+//        System.out.println("一对:"+Two);
+//        System.out.println("两对:"+Three);
+//        System.out.println("三条:"+Four);
+//        System.out.println("顺子:"+Five);
+//        System.out.println("同花:"+Six);
+//        System.out.println("葫芦:"+Seven);
+//        System.out.println("四条:"+Eight);
+//        System.out.println("同花顺:"+Nine);
+//        System.out.println("皇家同花顺:"+Ten);
 
         boolean start = false;
 
-        while (start) {
+        while (true) {
             System.out.printf("----------------------------第%d局--------------------------\n", rounds);
             chipPool = 0;
             stages = 1;

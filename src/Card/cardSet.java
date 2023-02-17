@@ -15,8 +15,29 @@ public class cardSet {
     * 4     四条
     * */
 
+    public static int judgeTwoCards(card[] HanCard){
+        int weight = 0;
+
+        if(HanCard[0].number==HanCard[1].number){
+            if(HanCard[0].color==HanCard[1].color){
+                weight = 4; // 两张牌的数字和花色都相同，判定为"stronger牌"
+            }else {
+                weight = 3; // 只有数字相同，判定为"strong牌"
+            }
+        }else {
+            if(HanCard[0].color==HanCard[1].color){
+                weight = 2; // 只有花色相同，判定为"weak牌"
+            }else {
+                weight = 1; // 花色和数字都不相同，判定为"weaker牌"
+            }
+        }
+
+        return weight;
+    }
+
+
     //判断五张牌的
-    public static int judgeCards(card[] temp) {
+    /*public static int judgeCards(card[] temp) {
         //weight记录每总牌型的大小
         int weight = -1;
         boolean isSameColor = false;//是否是同一花色
@@ -121,7 +142,103 @@ public class cardSet {
             }
         }
         return weight;
+    }*/
+
+    //判断五张牌的
+    //判断五张牌的
+    public static int judgeCards2(card[] cards) {
+        int len = cards.length;
+        //记录牌型大小
+        int weight = 0;
+        //对牌按从小到大排序
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = 0; j < len - 1 - i; j++) {
+                if (cards[j].number > cards[j + 1].number) {
+                    card temp = cards[j];
+                    cards[j] = cards[j + 1];
+                    cards[j + 1] = temp;
+                }
+            }
+        }
+        //判断同花
+        boolean isTongHua = true;
+        //判断顺子
+        boolean isShunZi = true;
+        //对牌型进行判断
+        int color = cards[0].color;
+        for (int i = 0; i < len; i++) {
+            if (i > 1) {
+                if (cards[i].number - cards[i - 1].number != 1)
+                    isShunZi = false;
+            }
+            if (color != cards[i].color) {
+                isTongHua = false;
+            }
+        }
+        if (isShunZi&&isTongHua&&(cards[4].number==14)){
+            weight=10;
+        }
+        else if (isTongHua && isShunZi) {
+            weight = 9;
+        } else if (isTongHua) {
+            weight = 6;
+        } else if (isShunZi) {
+            weight = 5;
+        } else {
+            //统计数组中重复的数
+            int count = 1;
+            //统计重复数的类型
+            int num2 = 0;
+            int num3 = 0;
+            int num4 = 0;
+            for (int i = 0; i < len; i++) {
+                if (i == len - 1) {
+                    switch (count) {
+                        case 2 -> num2++;
+                        case 3 -> num3++;
+                        case 4 -> num4++;
+                    }
+                    break;
+                }
+                if (cards[i].number == cards[i + 1].number) {
+                    count++;
+                } else {
+                    switch (count) {
+                        case 2 -> num2++;
+                        case 3 -> num3++;
+                        case 4 -> num4++;
+                    }
+                    count = 1;
+                }
+            }
+            if (num2 == 1 && num3 == 0) {
+                weight = 2;
+            } else if (num2 == 2) {
+                weight = 3;
+            } else if (num3 == 1 && num2 == 0) {
+                weight = 4;
+            } else if (num3 == 1 && num2 == 1) {
+                weight = 7;
+            } else if (num4 == 1) {
+                weight = 8;
+            } else {
+                weight = 1;
+            }
+        }
+      /*  switch (weight){
+            case 1-> System.out.println("杂牌");
+            case 2-> System.out.println("一对");
+            case 3-> System.out.println("两对");
+            case 4-> System.out.println("三条");
+            case 5-> System.out.println("顺子");
+            case 6-> System.out.println("同花");
+            case 7-> System.out.println("葫芦");
+            case 8-> System.out.println("四条");
+            case 9-> System.out.println("同花顺");
+            default -> System.out.println("error");*/
+        return weight;
     }
+
 
     //判断6张或7张牌的
     public static int judge67Cards2(card[] ca1, card[] ca2) {
@@ -207,7 +324,7 @@ public class cardSet {
 
         //System.out.println("---------------------------------");
         for (int i = 0; i < c2.length; i++) {
-            maxWeight = Math.max(judgeCards(c2[i]), maxWeight);
+            maxWeight = Math.max(judgeCards2(c2[i]), maxWeight);
         }
         return maxWeight;
     }

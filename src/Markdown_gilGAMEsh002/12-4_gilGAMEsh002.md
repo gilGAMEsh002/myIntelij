@@ -7,3 +7,4 @@
 5. fold操作中,isFold置为true后,还得还原回false,不然下次还会执行continue
 6. scanner就不用关了
 7. 下注规则?
+8. 对输入错误的提示需要改进,不知道做界面设计的做没有

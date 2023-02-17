@@ -5,11 +5,15 @@ public class card {
     public int color ;    //1为♥,2为♦,3为♠,4为♣
 
     public boolean exitCard = true;    //牌存在为:true
-    public int cardWeight;
 
     public card(int number, int color) {
         this.number = number;
         this.color = color;
+    }
+
+    public card(){
+        this.number = 0;
+        this.color = 0;
     }
 
     @Override

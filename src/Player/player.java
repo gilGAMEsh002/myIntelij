@@ -10,7 +10,7 @@ public class player {
     public int pay; //最小下注额为100
     public int lastpay;
     public boolean isFold = false;//用isFold来判断是否执行continue
-
+    public String choice = "";
 
 
     public void setHandCard(card[] handCard) {
